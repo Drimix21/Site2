@@ -1,0 +1,1 @@
+import {getSupabase} from "./supabase.js"; export async function loadPublishedReviews(){const db=await getSupabase();if(!db)return [];const {data,error}=await db.from("reviews").select("author_name,rating,content,created_at").eq("is_published",true).order("created_at",{ascending:false});if(error)throw error;return data||[];}

@@ -1,0 +1,3 @@
+import {getSupabase} from "./supabase.js";
+const form=document.querySelector("#contact-form"),msg=form?.querySelector(".form-message");
+form?.addEventListener("submit",async e=>{e.preventDefault();msg.textContent="";const values=Object.fromEntries(new FormData(form));try{const db=await getSupabase();if(!db){msg.textContent="Демо-режим: Supabase не настроен, обращение не отправлено.";return;}const {error}=await db.from("contact_messages").insert({name:values.name,email:values.email,phone:values.phone||null,message:values.message,status:"new"});if(error)throw error;msg.textContent="Сообщение отправлено. Спасибо!";form.reset();}catch(err){msg.textContent="Не удалось отправить сообщение. Проверьте настройки и попробуйте позже.";console.error(err)}});

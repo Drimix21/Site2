@@ -1,0 +1,1 @@
+import {getSupabase} from "./supabase.js"; export async function loadSpecialists(){const db=await getSupabase();if(!db)return [];const {data,error}=await db.from("specialists").select("*").eq("is_active",true);if(error)throw error;return data||[];}
